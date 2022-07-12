@@ -3,6 +3,8 @@ const fs = require('fs');
 
 const UTF8 = 'utf8';
 const WORDS_FOLDER = './words/';
+const FILE_SUFFIX = '.txt';
+const NEW_LINE = '\n';
 const WORDS_NOT_FOUND = 'Words not found';
 const LANGUAGES_NOT_FOUND = 'Languages not found';
 
@@ -17,18 +19,21 @@ const getLanguages = () => new Promise((resolve, reject) => {
 		if (err || !files) {
 			reject(LANGUAGES_NOT_FOUND);
 		} else {
-			resolve(files.map((fileName) => fileName.replace('.txt', '')));
+			resolve(files.map((fileName) => fileName.replace(FILE_SUFFIX, '')));
 		}
 	});
 });
 
 
+const getWordFileName = (lang) => `${WORDS_FOLDER}/${lang}.txt`;
+
+
 const getWordsByLanguage = (lang) => new Promise((resolve, reject) => {
-	fs.readFile(`${WORDS_FOLDER}/${lang}.txt`, UTF8, (err, data) => {
+	fs.readFile(getWordFileName(lang), UTF8, (err, data) => {
 		if (err || !data) {
 			reject(WORDS_NOT_FOUND);
 		} else {
-			resolve(data.split('\n'));
+			resolve(data.split(NEW_LINE));
 		}
 	});
 });
@@ -39,5 +44,6 @@ module.exports = {
 	errorResponse,
 	successResponse,
 	getLanguages,
+	getWordFileName,
 	getWordsByLanguage
 };
