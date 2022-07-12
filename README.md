@@ -1,1 +1,1 @@
-# words-by-language-generator
+# Words by language generator
