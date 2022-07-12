@@ -28,9 +28,7 @@ const getWordsByLanguage = (lang) => new Promise((resolve, reject) => {
 		if (err || !data) {
 			reject(WORDS_NOT_FOUND);
 		} else {
-			const words = data.split('\n');
-
-			resolve(words);
+			resolve(data.split('\n'));
 		}
 	});
 });
